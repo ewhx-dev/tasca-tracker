@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f6f5f1" />
+    <meta name="theme-color" content="#f3f5f0" id="theme-color-meta" />
     <meta
       name="description"
       content="Tasca: un modo semplice e privato per tenere d'occhio le tue spese."
@@ -51,7 +51,20 @@
       <main class="main-content">
         <header class="topbar">
           <div class="breadcrumb"><span>Il mio spazio</span><span>/</span><strong>Panoramica</strong></div>
-          <span class="today-label" id="today-label"></span>
+          <div class="topbar-actions">
+            <span class="today-label" id="today-label"></span>
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              type="button"
+              aria-label="Passa al tema scuro"
+              aria-pressed="false"
+              title="Passa al tema scuro"
+            >
+              <span class="theme-icon" id="theme-icon" aria-hidden="true">☾</span>
+              <span class="theme-label" id="theme-label">Tema scuro</span>
+            </button>
+          </div>
         </header>
 
         <section class="page-section" id="overview">

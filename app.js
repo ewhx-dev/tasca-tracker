@@ -1,6 +1,7 @@
 "use strict";
 
 const STORAGE_KEY = "tasca-transactions-v1";
+const THEME_STORAGE_KEY = "tasca-theme-v1";
 const currency = new Intl.NumberFormat("it-IT", {
   style: "currency",
   currency: "EUR",
@@ -25,7 +26,23 @@ const filter = document.querySelector("#type-filter");
 const dialog = document.querySelector("#transaction-dialog");
 const form = document.querySelector("#transaction-form");
 const dateInput = form.elements.date;
+const themeToggle = document.querySelector("#theme-toggle");
+const themeIcon = document.querySelector("#theme-icon");
+const themeLabel = document.querySelector("#theme-label");
+const themeColorMeta = document.querySelector("#theme-color-meta");
 let transactions = loadTransactions();
+
+applyTheme(loadTheme());
+themeToggle.addEventListener("click", () => {
+  const nextTheme =
+    document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(nextTheme);
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  } catch (error) {
+    console.error("Impossibile salvare la preferenza del tema.", error);
+  }
+});
 
 document.querySelector("#today-label").textContent =
   new Intl.DateTimeFormat("it-IT", {
@@ -86,6 +103,32 @@ function loadTransactions() {
     console.error("Impossibile leggere i movimenti salvati.", error);
     return [];
   }
+}
+
+function loadTheme() {
+  try {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+  } catch (error) {
+    console.error("Impossibile leggere la preferenza del tema.", error);
+  }
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function applyTheme(theme) {
+  const isDark = theme === "dark";
+  document.documentElement.dataset.theme = theme;
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+  themeToggle.setAttribute(
+    "aria-label",
+    isDark ? "Passa al tema chiaro" : "Passa al tema scuro",
+  );
+  themeToggle.title = isDark ? "Passa al tema chiaro" : "Passa al tema scuro";
+  themeIcon.textContent = isDark ? "☀" : "☾";
+  themeLabel.textContent = isDark ? "Tema chiaro" : "Tema scuro";
+  themeColorMeta.setAttribute("content", isDark ? "#0c1210" : "#f3f5f0");
 }
 
 function isValidTransaction(item) {

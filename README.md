@@ -12,6 +12,8 @@ Apri `index.html` in un browser: non servono installazioni, server o dipendenze.
 - Aggiunta di movimenti con descrizione, categoria, importo e data.
 - Filtro per entrate e uscite; eliminazione dei movimenti.
 - Esportazione di tutti i movimenti in formato CSV.
+- Tema chiaro/scuro, con preferenza salvata nel browser e rispetto del tema di sistema.
+- Transizioni e animazioni leggere, disattivate quando il dispositivo richiede movimento ridotto.
 - Salvataggio locale nel browser tramite `localStorage`: i dati non vengono inviati a un server.
 - Interfaccia responsive, in italiano.
 
